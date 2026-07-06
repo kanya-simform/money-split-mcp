@@ -1,0 +1,21 @@
+databases:
+  - name: money-split-db
+    databaseName: moneysplit
+    user: moneysplit
+    plan: free
+
+services:
+  - type: web
+    name: money-split-mcp
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    preDeployCommand: npx prisma migrate deploy
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: money-split-db
+          property: connectionString
+      - key: NODE_ENV
+        value: production
