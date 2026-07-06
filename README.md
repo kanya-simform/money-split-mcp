@@ -86,7 +86,18 @@ on it long-term; swap in any external Postgres (e.g. Neon, Supabase) by just cha
    curl -s https://<your-service>.onrender.com/register -H 'content-type: application/json' \
      -d '{"email":"you@example.com","name":"Your Name"}'
    ```
-2. Add it as a remote MCP server in your client, e.g. in Claude Desktop's config:
+2. Add it as a remote MCP server in your client.
+
+   **Claude Code (CLI)** — add it at local scope (not committed to git) with the key pulled from an env var, since
+   `.mcp.json` would otherwise be shared/committed:
+   ```bash
+   export MONEY_SPLIT_API_KEY=<your apiKey>
+
+   claude mcp add --transport http money-split https://<your-service>.onrender.com/mcp \
+     --header "Authorization: Bearer \${MONEY_SPLIT_API_KEY}"
+   ```
+
+   **Claude Desktop** — add to its config:
    ```json
    {
      "mcpServers": {
