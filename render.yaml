@@ -9,9 +9,8 @@ services:
     name: money-split-mcp
     runtime: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm install && npm run build && npx prisma migrate deploy
     startCommand: npm start
-    preDeployCommand: npx prisma migrate deploy
     envVars:
       - key: DATABASE_URL
         fromDatabase:

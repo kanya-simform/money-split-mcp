@@ -68,8 +68,9 @@ This repo includes a `render.yaml` Blueprint that provisions a Postgres database
 1. Push this repo to GitHub.
 2. In the Render dashboard: **New > Blueprint**, point it at the repo — it will read `render.yaml` and create both
    the `money-split-db` database and the `money-split-mcp` web service, wiring `DATABASE_URL` automatically.
-3. The web service's `preDeployCommand` runs `npx prisma migrate deploy` before each deploy, keeping the schema in
-   sync. (If your Render plan doesn't support `preDeployCommand`, run it once manually from the service's Shell tab.)
+3. The web service's build command runs `npx prisma migrate deploy` after compiling, keeping the schema in sync on
+   every deploy. (Render's free plan doesn't support the separate `preDeployCommand` step, so it's folded into the
+   build instead.)
 4. Once deployed, verify:
    ```
    curl https://<your-service>.onrender.com/health
